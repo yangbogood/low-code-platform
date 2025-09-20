@@ -260,9 +260,7 @@ npm run build
 4. 推送到分支 (`git push origin feature/AmazingFeature`)
 5. 打开 Pull Request
 
-## 📄 许可证
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
 ## 🙏 致谢
 
@@ -271,13 +269,3 @@ npm run build
 - [Ant Design](https://ant.design/) - UI 组件库
 - [TypeScript](https://www.typescriptlang.org/) - 类型系统
 
-## 📞 联系方式
-
-如有问题或建议，请通过以下方式联系：
-
-- 提交 [Issue](https://github.com/your-username/low-code-platform/issues)
-- 发送邮件至 your-email@example.com
-
----
-
-⭐ 如果这个项目对你有帮助，请给它一个星标！
