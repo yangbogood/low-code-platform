@@ -1,0 +1,44 @@
+name: 部署到 GitHub Pages
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    name: 构建并部署
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 构建应用
+        run: npm run build
+
+      - name: 设置 Pages
+        uses: actions/configure-pages@v4
+
+      - name: 上传到 Pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: dist/
+
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3

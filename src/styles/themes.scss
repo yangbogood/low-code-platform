@@ -1,0 +1,305 @@
+// SCSS 主题系统
+@use './variables.scss' as *;
+@use './mixins.scss' as *;
+
+// 正常模式主题变量
+:root {
+  // 颜色系统
+  --primary-color: #{$primary-color};
+  --success-color: #{$success-color};
+  --warning-color: #{$warning-color};
+  --error-color: #{$error-color};
+  --info-color: #{$info-color};
+
+  // 中性色
+  --text-color: #{$text-color};
+  --text-color-secondary: #{$text-color-secondary};
+  --text-color-disabled: #{$text-color-disabled};
+  --border-color: #{$border-color};
+  --border-color-light: #{$border-color-light};
+  --background-color: #{$background-color};
+  --background-color-light: #{$background-color-light};
+
+  // 组件背景色
+  --component-bg: #{$background-color-light};
+  --sidebar-bg: #{$background-color-light};
+  --toolbar-bg: #{$background-color-light};
+  --canvas-bg: #{$background-color};
+  --modal-bg: #{$background-color-light};
+
+  // 阴影
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  --shadow-xl: #{$shadow-xl};
+
+  // 主题标识
+  --theme-mode: 'light';
+}
+
+// 暗黑模式主题变量
+[data-theme='dark'] {
+  // 颜色系统
+  --primary-color: #177ddc;
+  --success-color: #49aa19;
+  --warning-color: #d89614;
+  --error-color: #dc4446;
+  --info-color: #177ddc;
+
+  // 中性色
+  --text-color: #ffffff;
+  --text-color-secondary: #a6a6a6;
+  --text-color-disabled: #595959;
+  --border-color: #434343;
+  --border-color-light: #303030;
+  --background-color: #141414;
+  --background-color-light: #1f1f1f;
+
+  // 组件背景色
+  --component-bg: #1f1f1f;
+  --sidebar-bg: #1f1f1f;
+  --toolbar-bg: #1f1f1f;
+  --canvas-bg: #141414;
+  --modal-bg: #1f1f1f;
+
+  // 阴影
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.6);
+
+  // 主题标识
+  --theme-mode: 'dark';
+}
+
+// 主题切换动画
+* {
+  transition: 
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+// 主题相关的组件样式
+.theme-light {
+  // 正常模式特定样式
+  // Ant Design 组件样式由 ConfigProvider 处理
+}
+
+.theme-dark {
+  // 暗黑模式特定样式
+  // Ant Design 组件样式由 ConfigProvider 处理
+  
+  // 自定义组件的暗黑模式样式
+  .code-preview {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    border-color: var(--border-color);
+
+    .token.comment {
+      color: #6a9955;
+    }
+
+    .token.keyword {
+      color: #569cd6;
+    }
+
+    .token.string {
+      color: #ce9178;
+    }
+
+    .token.number {
+      color: #b5cea8;
+    }
+
+    .token.function {
+      color: #dcdcaa;
+    }
+
+    .token.class-name {
+      color: #4ec9b0;
+    }
+  }
+}
+
+// 主题切换按钮样式
+.theme-switch {
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--component-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 18px;
+
+  &:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &--light {
+    &::before {
+      content: '☀️';
+    }
+  }
+
+  &--dark {
+    &::before {
+      content: '🌙';
+    }
+  }
+}
+
+// 主题切换动画效果
+.theme-transition {
+  &-enter {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  &-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  &-exit {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  &-exit-active {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+}
+
+// 主题相关的工具类
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.text-secondary {
+  color: var(--text-color-secondary) !important;
+}
+
+.text-disabled {
+  color: var(--text-color-disabled) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.bg-secondary {
+  background-color: var(--background-color) !important;
+}
+
+.bg-light {
+  background-color: var(--background-color-light) !important;
+}
+
+.border-primary {
+  border-color: var(--primary-color) !important;
+}
+
+.border-secondary {
+  border-color: var(--border-color) !important;
+}
+
+.shadow-sm {
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md) !important;
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.shadow-xl {
+  box-shadow: var(--shadow-xl) !important;
+}
+
+// 响应式主题调整
+@include mobile {
+  .theme-switch {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+}
+
+// 主题切换时的特殊效果
+.theme-switching {
+  .ant-layout,
+  .ant-layout-sider,
+  .ant-layout-header,
+  .ant-card,
+  .ant-modal-content {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+// 暗黑模式下的代码预览样式
+[data-theme='dark'] {
+  .code-preview {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    border-color: var(--border-color);
+
+    .token.comment {
+      color: #6a9955;
+    }
+
+    .token.keyword {
+      color: #569cd6;
+    }
+
+    .token.string {
+      color: #ce9178;
+    }
+
+    .token.number {
+      color: #b5cea8;
+    }
+
+    .token.function {
+      color: #dcdcaa;
+    }
+
+    .token.class-name {
+      color: #4ec9b0;
+    }
+  }
+}
+
+// 主题相关的滚动条样式
+[data-theme='dark'] {
+  @include custom-scrollbar(6px, #2a2a2a, #555);
+
+  &::-webkit-scrollbar-track {
+    background: #2a2a2a;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 3px;
+
+    &:hover {
+      background: #777;
+    }
+  }
+}

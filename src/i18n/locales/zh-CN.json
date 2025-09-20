@@ -1,0 +1,248 @@
+{
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "confirm": "确认",
+    "delete": "删除",
+    "edit": "编辑",
+    "add": "添加",
+    "remove": "移除",
+    "reset": "重置",
+    "submit": "提交",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "loading": "加载中...",
+    "success": "成功",
+    "error": "错误",
+    "warning": "警告",
+    "info": "信息",
+    "yes": "是",
+    "no": "否",
+    "ok": "确定",
+    "close": "关闭",
+    "open": "打开",
+    "search": "搜索",
+    "filter": "筛选",
+    "sort": "排序",
+    "refresh": "刷新",
+    "undo": "撤销",
+    "redo": "重做",
+    "copy": "复制",
+    "paste": "粘贴",
+    "cut": "剪切",
+    "select": "选择",
+    "selectAll": "全选",
+    "clear": "清空",
+    "preview": "预览",
+    "download": "下载",
+    "upload": "上传",
+    "export": "导出",
+    "import": "导入",
+    "settings": "设置",
+    "help": "帮助",
+    "about": "关于"
+  },
+  "app": {
+    "title": "低代码平台",
+    "description": "基于Vite + React + TypeScript的低代码平台",
+    "projectName": "我的低代码项目",
+    "welcomePage": "欢迎页面",
+    "homePage": "首页"
+  },
+  "toolbar": {
+    "title": "低代码平台",
+    "undo": "撤销",
+    "redo": "重做",
+    "save": "保存",
+    "preview": "预览",
+    "generateCode": "生成代码"
+  },
+  "sidebar": {
+    "componentLibrary": "组件库",
+    "propertyPanel": "属性配置",
+    "selectComponent": "请选择一个组件来编辑属性"
+  },
+  "components": {
+    "button": {
+      "name": "按钮",
+      "description": "可点击的按钮组件",
+      "text": "按钮文本",
+      "type": "按钮类型",
+      "size": "按钮大小",
+      "disabled": "禁用状态",
+      "types": {
+        "default": "默认",
+        "primary": "主要",
+        "dashed": "虚线",
+        "text": "文本",
+        "link": "链接"
+      },
+      "sizes": {
+        "small": "小",
+        "middle": "中",
+        "large": "大"
+      }
+    },
+    "input": {
+      "name": "输入框",
+      "description": "单行文本输入组件",
+      "placeholder": "占位符",
+      "size": "输入框大小",
+      "disabled": "禁用状态",
+      "defaultPlaceholder": "请输入内容",
+      "sizes": {
+        "small": "小",
+        "middle": "中",
+        "large": "大"
+      }
+    },
+    "text": {
+      "name": "文本",
+      "description": "显示文本内容",
+      "content": "文本内容",
+      "color": "文字颜色",
+      "fontSize": "字体大小",
+      "defaultContent": "文本内容"
+    },
+    "title": {
+      "name": "标题",
+      "description": "显示标题文本",
+      "content": "标题内容",
+      "level": "标题级别",
+      "color": "文字颜色",
+      "defaultContent": "标题",
+      "levels": {
+        "h1": "H1",
+        "h2": "H2",
+        "h3": "H3",
+        "h4": "H4",
+        "h5": "H5"
+      }
+    },
+    "paragraph": {
+      "name": "段落",
+      "description": "显示段落文本",
+      "content": "段落内容",
+      "color": "文字颜色",
+      "defaultContent": "段落内容"
+    },
+    "card": {
+      "name": "卡片",
+      "description": "卡片容器组件",
+      "title": "卡片标题",
+      "content": "卡片内容",
+      "bordered": "显示边框",
+      "defaultTitle": "卡片标题",
+      "defaultContent": "卡片内容"
+    },
+    "image": {
+      "name": "图片",
+      "description": "显示图片组件",
+      "src": "图片地址",
+      "alt": "替代文本",
+      "width": "宽度",
+      "height": "高度",
+      "defaultAlt": "图片"
+    },
+    "container": {
+      "name": "容器",
+      "description": "通用容器组件",
+      "backgroundColor": "背景颜色",
+      "padding": "内边距",
+      "margin": "外边距"
+    },
+    "textarea": {
+      "name": "多行输入框",
+      "description": "多行文本输入组件",
+      "placeholder": "占位符",
+      "rows": "行数",
+      "disabled": "禁用状态",
+      "defaultPlaceholder": "请输入内容"
+    },
+    "select": {
+      "name": "选择器",
+      "description": "下拉选择组件",
+      "placeholder": "占位符",
+      "disabled": "禁用状态",
+      "defaultPlaceholder": "请选择"
+    },
+    "switch": {
+      "name": "开关",
+      "description": "开关切换组件",
+      "checked": "是否选中",
+      "disabled": "禁用状态"
+    },
+    "divider": {
+      "name": "分割线",
+      "description": "分割线组件",
+      "type": "分割线类型",
+      "orientation": "文字位置",
+      "types": {
+        "horizontal": "水平",
+        "vertical": "垂直"
+      },
+      "orientations": {
+        "left": "左侧",
+        "center": "居中",
+        "right": "右侧"
+      }
+    },
+    "badge": {
+      "name": "徽标",
+      "description": "徽标组件",
+      "count": "徽标数",
+      "showZero": "显示零值"
+    }
+  },
+  "categories": {
+    "basic": "基础组件",
+    "layout": "布局组件",
+    "form": "表单组件",
+    "data": "数据展示",
+    "feedback": "反馈组件",
+    "navigation": "导航组件",
+    "other": "其他组件"
+  },
+  "theme": {
+    "light": "正常模式",
+    "dark": "暗黑模式",
+    "switchToLight": "切换到正常模式",
+    "switchToDark": "切换到暗黑模式",
+    "switchTheme": "切换主题"
+  },
+  "language": {
+    "chinese": "中文",
+    "english": "English",
+    "switchLanguage": "切换语言"
+  },
+  "messages": {
+    "projectSaved": "项目已保存",
+    "codeGenerated": "代码生成功能已集成到预览模式中",
+    "dragStart": "开始拖拽组件",
+    "unsupportedFramework": "不支持的框架类型"
+  },
+  "placeholders": {
+    "enterText": "请输入{{label}}",
+    "selectOption": "请选择{{label}}",
+    "enterContent": "请输入内容",
+    "selectComponent": "请选择一个组件来编辑属性"
+  },
+  "codeGenerator": {
+    "mainApp": "生成主应用文件",
+    "pageComponent": "生成页面组件",
+    "componentFile": "生成组件文件",
+    "reusableComponents": "可复用组件可以在这里定义",
+    "globalStyles": "全局样式",
+    "pageStyles": "页面样式",
+    "componentStyles": "组件样式",
+    "unknownComponent": "未知组件",
+    "button": "按钮",
+    "text": "文本",
+    "title": "标题",
+    "paragraph": "段落",
+    "cardTitle": "卡片标题",
+    "cardContent": "卡片内容",
+    "image": "图片"
+  }
+}

@@ -1,0 +1,493 @@
+// SCSS 组件样式
+@use './variables.scss' as *;
+@use './mixins.scss' as *;
+@use './animations.scss' as *;
+@use 'sass:color';
+
+// 全局样式重置
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $background-color;
+  color: $text-color;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+
+// 低代码平台主容器
+.low-code-platform {
+  height: 100vh;
+  overflow: hidden;
+  @include flex-column;
+}
+
+// 工具栏样式
+.toolbar {
+  @include flex-between;
+  height: $header-height;
+  padding: 0 $spacing-lg;
+  background: $background-color-light;
+  border-bottom: 1px solid $border-color-light;
+  box-shadow: $shadow-sm;
+  z-index: 10;
+
+  &-title {
+    margin: 0;
+    color: $primary-color;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    @include flex-center;
+    gap: $spacing-sm;
+
+    &::before {
+      content: '🚀';
+      font-size: $font-size-lg;
+    }
+  }
+
+  &-actions {
+    @include flex-center;
+    gap: $spacing-sm;
+  }
+}
+
+// 布局容器
+.layout-container {
+  flex: 1;
+  @include flex-center;
+  overflow: hidden;
+}
+
+// 侧边栏样式
+.sidebar {
+  height: 100%;
+  background: $background-color-light;
+  border-right: 1px solid $border-color-light;
+  box-shadow: $shadow-sm;
+  overflow: hidden;
+
+  &--left {
+    width: $sidebar-width;
+    min-width: $sidebar-width;
+    max-width: $sidebar-width;
+  }
+
+  &--right {
+    width: $property-panel-width;
+    min-width: $property-panel-width;
+    max-width: $property-panel-width;
+    border-right: none;
+    border-left: 1px solid $border-color-light;
+  }
+}
+
+// 组件库样式
+.component-library {
+  @include property-panel;
+  padding: $spacing-md;
+
+  &-title {
+    margin: 0 0 $spacing-md 0;
+    color: $text-color;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+  }
+
+  &-category {
+    margin-bottom: $spacing-lg;
+
+    &-title {
+      margin: 0 0 $spacing-sm 0;
+      color: $text-color;
+      font-size: $font-size-md;
+      font-weight: $font-weight-medium;
+    }
+
+    &-items {
+      @include flex-column;
+      gap: $spacing-xs;
+    }
+  }
+}
+
+// 组件项样式
+.component-item {
+  @include component-library-item;
+  @include flex-center;
+  gap: $spacing-sm;
+  text-align: left;
+
+  &-icon {
+    font-size: $font-size-md;
+    flex-shrink: 0;
+  }
+
+  &-content {
+    flex: 1;
+    min-width: 0;
+
+    &-name {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      color: $text-color;
+      margin: 0 0 $spacing-xs 0;
+    }
+
+    &-description {
+      font-size: $font-size-xs;
+      color: $text-color-secondary;
+      margin: 0;
+      @include text-ellipsis;
+    }
+  }
+
+  &.dragging {
+    opacity: 0.5;
+    transform: scale(0.95) rotate(2deg);
+    animation: dragStart 0.2s ease;
+  }
+}
+
+// 画布区域样式
+.canvas-area {
+  @include canvas-area;
+  flex: 1;
+  margin: $spacing-md;
+  padding: $spacing-lg;
+  min-height: 400px;
+
+  &-placeholder {
+    @include absolute-center;
+    color: $text-color-secondary;
+    font-size: $font-size-md;
+    pointer-events: none;
+    @include flex-center;
+    @include flex-column;
+    gap: $spacing-sm;
+
+    &::before {
+      content: '📋';
+      font-size: $font-size-xxl;
+      opacity: 0.5;
+    }
+  }
+
+  &-content {
+    @include flex-column;
+    gap: $spacing-sm;
+  }
+}
+
+// 渲染组件样式
+.rendered-component {
+  @include rendered-component;
+  animation: componentEnter 0.3s ease;
+
+  &:hover {
+    outline: 1px dashed $primary-color;
+    outline-offset: 2px;
+  }
+
+  &.selected {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba($primary-color, 0.1);
+  }
+
+  &.dragging {
+    animation: dragStart 0.2s ease;
+  }
+}
+
+// 属性面板样式
+.property-panel {
+  @include property-panel;
+  padding: $spacing-md;
+
+  &-title {
+    margin: 0 0 $spacing-md 0;
+    color: $text-color;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+  }
+
+  &-section {
+    margin-bottom: $spacing-md;
+
+    &-title {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      color: $text-color;
+      margin: 0 0 $spacing-sm 0;
+    }
+  }
+
+  &-empty {
+    @include flex-center;
+    @include flex-column;
+    gap: $spacing-sm;
+    height: 200px;
+    color: $text-color-secondary;
+    font-size: $font-size-sm;
+  }
+}
+
+// 组件信息卡片
+.component-info {
+  @include card-base;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+
+  &-item {
+    @include flex-between;
+    margin-bottom: $spacing-xs;
+    font-size: $font-size-sm;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &-label {
+      color: $text-color-secondary;
+      font-weight: $font-weight-medium;
+    }
+
+    &-value {
+      color: $text-color;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: $font-size-xs;
+    }
+  }
+}
+
+// 预览模态框样式
+.preview-modal {
+  .ant-modal-body {
+    padding: 0;
+  }
+
+  &-content {
+    padding: $spacing-lg;
+    min-height: 600px;
+    background: $background-color-light;
+    @include flex-column;
+    gap: $spacing-md;
+  }
+
+  &-title {
+    margin: 0;
+    color: $text-color;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+  }
+
+  &-components {
+    @include flex-column;
+    gap: $spacing-sm;
+  }
+}
+
+// 代码预览样式
+.code-preview {
+  background: #f5f5f5;
+  padding: $spacing-md;
+  border-radius: $border-radius-md;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: $font-size-xs;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  max-height: 400px;
+  overflow: auto;
+  border: 1px solid $border-color;
+  @include custom-scrollbar;
+
+  &-actions {
+    @include flex-center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-md;
+  }
+}
+
+// 页面管理样式
+.page-manager {
+  padding: $spacing-md;
+  border-bottom: 1px solid $border-color-light;
+
+  &-tabs {
+    @include flex-center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-md;
+  }
+
+  &-tab {
+    padding: $spacing-sm $spacing-md;
+    border: 1px solid $border-color;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition: all $transition-fast;
+    font-size: $font-size-sm;
+    color: $text-color-secondary;
+
+    &:hover {
+      border-color: $primary-color;
+      color: $primary-color;
+    }
+
+    &.active {
+      border-color: $primary-color;
+      background-color: color.adjust($primary-color, $lightness: 45%);
+      color: $primary-color;
+      font-weight: $font-weight-medium;
+    }
+  }
+}
+
+// 组件树样式
+.component-tree {
+  padding: $spacing-md;
+
+  &-item {
+    @include flex-center;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    transition: all $transition-fast;
+    font-size: $font-size-sm;
+    color: $text-color;
+
+    &:hover {
+      background-color: $background-color;
+    }
+
+    &.selected {
+      background-color: color.adjust($primary-color, $lightness: 45%);
+      color: $primary-color;
+      font-weight: $font-weight-medium;
+    }
+
+    &-icon {
+      margin-right: $spacing-sm;
+      font-size: $font-size-sm;
+    }
+
+    &-name {
+      flex: 1;
+      @include text-ellipsis;
+    }
+  }
+}
+
+// 响应式设计
+@include mobile {
+  .sidebar {
+    &--left {
+      width: 200px;
+      min-width: 200px;
+      max-width: 200px;
+    }
+
+    &--right {
+      width: 250px;
+      min-width: 250px;
+      max-width: 250px;
+    }
+  }
+
+  .toolbar {
+    padding: 0 $spacing-md;
+
+    &-title {
+      font-size: $font-size-md;
+    }
+  }
+
+  .canvas-area {
+    margin: $spacing-sm;
+    padding: $spacing-md;
+  }
+}
+
+@include tablet {
+  .sidebar {
+    &--left {
+      width: 240px;
+      min-width: 240px;
+      max-width: 240px;
+    }
+
+    &--right {
+      width: 280px;
+      min-width: 280px;
+      max-width: 280px;
+    }
+  }
+}
+
+// 工具类
+.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+.slide-in-up {
+  animation: slideInUp 0.3s ease;
+}
+
+.slide-in-down {
+  animation: slideInDown 0.3s ease;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.3s ease;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.3s ease;
+}
+
+.scale-in {
+  animation: scaleIn 0.3s ease;
+}
+
+.rotate {
+  animation: rotate 1s linear infinite;
+}
+
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.blink {
+  animation: blink 1s ease-in-out infinite;
+}
+
+.progress {
+  animation: progress 2s ease-in-out;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+.wave {
+  animation: wave 1s ease-in-out infinite;
+}

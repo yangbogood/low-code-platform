@@ -1,0 +1,386 @@
+// SCSS 动画定义
+@use './variables.scss' as *;
+
+// 淡入动画
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// 滑入动画
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// 缩放动画
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+// 旋转动画
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// 脉冲动画
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// 摇摆动画
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-2px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(2px);
+  }
+}
+
+// 弹跳动画
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%, 43% {
+    transform: translate3d(0, -8px, 0);
+  }
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+// 闪烁动画
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+// 进度条动画
+@keyframes progress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+// 加载动画
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// 波浪动画
+@keyframes wave {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+// 拖拽动画
+@keyframes dragStart {
+  from {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.95) rotate(2deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes dragEnd {
+  from {
+    transform: scale(0.95) rotate(2deg);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+// 组件进入动画
+@keyframes componentEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+// 组件退出动画
+@keyframes componentExit {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+  }
+}
+
+// 属性面板动画
+@keyframes propertyPanelSlide {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// 模态框动画
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+// 工具提示动画
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// 通知动画
+@keyframes notificationSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes notificationSlideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+// 动画工具类
+.animate-fade-in {
+  animation: fadeIn $transition-normal ease;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp $transition-normal ease;
+}
+
+.animate-slide-in-down {
+  animation: slideInDown $transition-normal ease;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft $transition-normal ease;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight $transition-normal ease;
+}
+
+.animate-scale-in {
+  animation: scaleIn $transition-normal ease;
+}
+
+.animate-rotate {
+  animation: rotate 1s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.animate-blink {
+  animation: blink 1s ease-in-out infinite;
+}
+
+.animate-progress {
+  animation: progress 2s ease-in-out;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-wave {
+  animation: wave 1s ease-in-out infinite;
+}
+
+.animate-drag-start {
+  animation: dragStart $transition-fast ease;
+}
+
+.animate-drag-end {
+  animation: dragEnd $transition-fast ease;
+}
+
+.animate-component-enter {
+  animation: componentEnter $transition-normal ease;
+}
+
+.animate-component-exit {
+  animation: componentExit $transition-normal ease;
+}
+
+.animate-property-panel-slide {
+  animation: propertyPanelSlide $transition-normal ease;
+}
+
+.animate-modal-fade-in {
+  animation: modalFadeIn $transition-normal ease;
+}
+
+.animate-modal-slide-in {
+  animation: modalSlideIn $transition-normal ease;
+}
+
+.animate-tooltip-fade-in {
+  animation: tooltipFadeIn $transition-fast ease;
+}
+
+.animate-notification-slide-in {
+  animation: notificationSlideIn $transition-normal ease;
+}
+
+.animate-notification-slide-out {
+  animation: notificationSlideOut $transition-normal ease;
+}

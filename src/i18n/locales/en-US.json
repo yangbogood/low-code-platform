@@ -1,0 +1,248 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "remove": "Remove",
+    "reset": "Reset",
+    "submit": "Submit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "close": "Close",
+    "open": "Open",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "refresh": "Refresh",
+    "undo": "Undo",
+    "redo": "Redo",
+    "copy": "Copy",
+    "paste": "Paste",
+    "cut": "Cut",
+    "select": "Select",
+    "selectAll": "Select All",
+    "clear": "Clear",
+    "preview": "Preview",
+    "download": "Download",
+    "upload": "Upload",
+    "export": "Export",
+    "import": "Import",
+    "settings": "Settings",
+    "help": "Help",
+    "about": "About"
+  },
+  "app": {
+    "title": "Low-Code Platform",
+    "description": "Low-code platform based on Vite + React + TypeScript",
+    "projectName": "My Low-Code Project",
+    "welcomePage": "Welcome Page",
+    "homePage": "Home"
+  },
+  "toolbar": {
+    "title": "Low-Code Platform",
+    "undo": "Undo",
+    "redo": "Redo",
+    "save": "Save",
+    "preview": "Preview",
+    "generateCode": "Generate Code"
+  },
+  "sidebar": {
+    "componentLibrary": "Component Library",
+    "propertyPanel": "Property Panel",
+    "selectComponent": "Please select a component to edit properties"
+  },
+  "components": {
+    "button": {
+      "name": "Button",
+      "description": "Clickable button component",
+      "text": "Button Text",
+      "type": "Button Type",
+      "size": "Button Size",
+      "disabled": "Disabled",
+      "types": {
+        "default": "Default",
+        "primary": "Primary",
+        "dashed": "Dashed",
+        "text": "Text",
+        "link": "Link"
+      },
+      "sizes": {
+        "small": "Small",
+        "middle": "Middle",
+        "large": "Large"
+      }
+    },
+    "input": {
+      "name": "Input",
+      "description": "Single-line text input component",
+      "placeholder": "Placeholder",
+      "size": "Input Size",
+      "disabled": "Disabled",
+      "defaultPlaceholder": "Please enter content",
+      "sizes": {
+        "small": "Small",
+        "middle": "Middle",
+        "large": "Large"
+      }
+    },
+    "text": {
+      "name": "Text",
+      "description": "Display text content",
+      "content": "Text Content",
+      "color": "Text Color",
+      "fontSize": "Font Size",
+      "defaultContent": "Text Content"
+    },
+    "title": {
+      "name": "Title",
+      "description": "Display title text",
+      "content": "Title Content",
+      "level": "Title Level",
+      "color": "Text Color",
+      "defaultContent": "Title",
+      "levels": {
+        "h1": "H1",
+        "h2": "H2",
+        "h3": "H3",
+        "h4": "H4",
+        "h5": "H5"
+      }
+    },
+    "paragraph": {
+      "name": "Paragraph",
+      "description": "Display paragraph text",
+      "content": "Paragraph Content",
+      "color": "Text Color",
+      "defaultContent": "Paragraph Content"
+    },
+    "card": {
+      "name": "Card",
+      "description": "Card container component",
+      "title": "Card Title",
+      "content": "Card Content",
+      "bordered": "Show Border",
+      "defaultTitle": "Card Title",
+      "defaultContent": "Card Content"
+    },
+    "image": {
+      "name": "Image",
+      "description": "Display image component",
+      "src": "Image URL",
+      "alt": "Alt Text",
+      "width": "Width",
+      "height": "Height",
+      "defaultAlt": "Image"
+    },
+    "container": {
+      "name": "Container",
+      "description": "General container component",
+      "backgroundColor": "Background Color",
+      "padding": "Padding",
+      "margin": "Margin"
+    },
+    "textarea": {
+      "name": "Textarea",
+      "description": "Multi-line text input component",
+      "placeholder": "Placeholder",
+      "rows": "Rows",
+      "disabled": "Disabled",
+      "defaultPlaceholder": "Please enter content"
+    },
+    "select": {
+      "name": "Select",
+      "description": "Dropdown select component",
+      "placeholder": "Placeholder",
+      "disabled": "Disabled",
+      "defaultPlaceholder": "Please select"
+    },
+    "switch": {
+      "name": "Switch",
+      "description": "Switch toggle component",
+      "checked": "Checked",
+      "disabled": "Disabled"
+    },
+    "divider": {
+      "name": "Divider",
+      "description": "Divider component",
+      "type": "Divider Type",
+      "orientation": "Text Position",
+      "types": {
+        "horizontal": "Horizontal",
+        "vertical": "Vertical"
+      },
+      "orientations": {
+        "left": "Left",
+        "center": "Center",
+        "right": "Right"
+      }
+    },
+    "badge": {
+      "name": "Badge",
+      "description": "Badge component",
+      "count": "Badge Count",
+      "showZero": "Show Zero"
+    }
+  },
+  "categories": {
+    "basic": "Basic Components",
+    "layout": "Layout Components",
+    "form": "Form Components",
+    "data": "Data Display",
+    "feedback": "Feedback Components",
+    "navigation": "Navigation Components",
+    "other": "Other Components"
+  },
+  "theme": {
+    "light": "Light Mode",
+    "dark": "Dark Mode",
+    "switchToLight": "Switch to Light Mode",
+    "switchToDark": "Switch to Dark Mode",
+    "switchTheme": "Switch Theme"
+  },
+  "language": {
+    "chinese": "中文",
+    "english": "English",
+    "switchLanguage": "Switch Language"
+  },
+  "messages": {
+    "projectSaved": "Project saved successfully",
+    "codeGenerated": "Code generation feature is integrated into preview mode",
+    "dragStart": "Start dragging component",
+    "unsupportedFramework": "Unsupported framework type"
+  },
+  "placeholders": {
+    "enterText": "Please enter {{label}}",
+    "selectOption": "Please select {{label}}",
+    "enterContent": "Please enter content",
+    "selectComponent": "Please select a component to edit properties"
+  },
+  "codeGenerator": {
+    "mainApp": "Generate main app file",
+    "pageComponent": "Generate page component",
+    "componentFile": "Generate component file",
+    "reusableComponents": "Reusable components can be defined here",
+    "globalStyles": "Global styles",
+    "pageStyles": "Page styles",
+    "componentStyles": "Component styles",
+    "unknownComponent": "Unknown component",
+    "button": "Button",
+    "text": "Text",
+    "title": "Title",
+    "paragraph": "Paragraph",
+    "cardTitle": "Card Title",
+    "cardContent": "Card Content",
+    "image": "Image"
+  }
+}
