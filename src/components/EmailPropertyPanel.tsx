@@ -1,5 +1,14 @@
 import React from 'react';
-import { Card, Form, Input, InputNumber, Select, ColorPicker, Button, Space, Divider } from 'antd';
+import {
+  Card,
+  Form,
+  Input,
+  Select,
+  ColorPicker,
+  Button,
+  Space,
+  Divider,
+} from 'antd';
 import { SaveOutlined, UndoOutlined } from '@ant-design/icons';
 import type { ComponentConfig } from '../types';
 
@@ -38,14 +47,16 @@ export const EmailPropertyPanel: React.FC<EmailPropertyPanelProps> = ({
   if (!selectedComponent) {
     return (
       <Card title="属性配置" style={{ height: '100%' }}>
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '200px',
-          color: '#999',
-        }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '200px',
+            color: '#999',
+          }}
+        >
           <div style={{ fontSize: '48px', marginBottom: '16px' }}>📧</div>
           <div>请选择一个邮件组件来编辑属性</div>
         </div>
@@ -61,7 +72,11 @@ export const EmailPropertyPanel: React.FC<EmailPropertyPanelProps> = ({
             <Form.Item label="Logo图片" name="logo">
               <Input placeholder="输入Logo图片URL" />
             </Form.Item>
-            <Form.Item label="公司名称" name="companyName" rules={[{ required: true }]}>
+            <Form.Item
+              label="公司名称"
+              name="companyName"
+              rules={[{ required: true }]}
+            >
               <Input placeholder="输入公司名称" />
             </Form.Item>
             <Form.Item label="公司标语" name="tagline">
@@ -138,7 +153,11 @@ export const EmailPropertyPanel: React.FC<EmailPropertyPanelProps> = ({
       case 'email-button':
         return (
           <>
-            <Form.Item label="按钮文字" name="text" rules={[{ required: true }]}>
+            <Form.Item
+              label="按钮文字"
+              name="text"
+              rules={[{ required: true }]}
+            >
               <Input placeholder="输入按钮文字" />
             </Form.Item>
             <Form.Item label="链接地址" name="url" rules={[{ required: true }]}>
@@ -234,7 +253,11 @@ export const EmailPropertyPanel: React.FC<EmailPropertyPanelProps> = ({
       case 'email-product':
         return (
           <>
-            <Form.Item label="产品名称" name="productName" rules={[{ required: true }]}>
+            <Form.Item
+              label="产品名称"
+              name="productName"
+              rules={[{ required: true }]}
+            >
               <Input placeholder="输入产品名称" />
             </Form.Item>
             <Form.Item label="产品描述" name="productDescription">
@@ -340,7 +363,11 @@ export const EmailPropertyPanel: React.FC<EmailPropertyPanelProps> = ({
       case 'email-footer':
         return (
           <>
-            <Form.Item label="脚部内容" name="content" rules={[{ required: true }]}>
+            <Form.Item
+              label="脚部内容"
+              name="content"
+              rules={[{ required: true }]}
+            >
               <TextArea rows={3} placeholder="输入脚部内容，支持HTML" />
             </Form.Item>
             <Form.Item label="背景颜色" name="backgroundColor">

@@ -3,11 +3,11 @@ import { Modal, Tabs, Button, Space, Typography, message } from 'antd';
 import { DownloadOutlined, EyeOutlined, CopyOutlined } from '@ant-design/icons';
 import { useEditor } from '../context/EditorContext';
 import { useTheme } from '../context/ThemeContext';
-import { renderEmailComponent } from './EmailComponents';
+// import { renderEmailComponent } from './EmailComponents';
 import type { ComponentConfig } from '../types';
 
 const { TabPane } = Tabs;
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 interface EmailCodePreviewModalProps {
   visible: boolean;
@@ -23,15 +23,18 @@ export const EmailCodePreviewModal: React.FC<EmailCodePreviewModalProps> = ({
   const [activeTab, setActiveTab] = useState('html');
 
   const generateEmailHTML = (): string => {
-    if (!state.currentPage) {return '';}
+    if (!state.currentPage) {
+      return '';
+    }
 
     const components = state.currentPage.components;
-    const componentsHTML = components.map(component => {
-      const componentElement = renderEmailComponent(component);
-      // 这里需要将React元素转换为HTML字符串
-      // 为了简化，我们直接生成HTML
-      return generateComponentHTML(component);
-    }).join('\n');
+    const componentsHTML = components
+      .map(component => {
+        // 这里需要将React元素转换为HTML字符串
+        // 为了简化，我们直接生成HTML
+        return generateComponentHTML(component);
+      })
+      .join('\n');
 
     return `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -179,7 +182,7 @@ export const EmailCodePreviewModal: React.FC<EmailCodePreviewModalProps> = ({
             </table>
         </div>`;
 
-      case 'email-social':
+      case 'email-social': {
         const socialLinks = [
           { name: 'Facebook', url: component.props.facebook, icon: '📘' },
           { name: 'Twitter', url: component.props.twitter, icon: '🐦' },
@@ -191,6 +194,7 @@ export const EmailCodePreviewModal: React.FC<EmailCodePreviewModalProps> = ({
         <div style="background-color: ${component.props.backgroundColor || '#f8f9fa'}; padding: ${component.props.padding || '20px'}; text-align: ${component.props.textAlign || 'center'};">
             ${socialLinks.map(link => `<a href="${link.url}" style="display: inline-block; margin: 0 10px; font-size: 24px; text-decoration: none;" title="${link.name}">${link.icon}</a>`).join('')}
         </div>`;
+      }
 
       default:
         return `<div>未知组件: ${component.type}</div>`;
@@ -198,11 +202,14 @@ export const EmailCodePreviewModal: React.FC<EmailCodePreviewModalProps> = ({
   };
 
   const handleCopy = (content: string) => {
-    navigator.clipboard.writeText(content).then(() => {
-      message.success('代码已复制到剪贴板');
-    }).catch(() => {
-      message.error('复制失败');
-    });
+    navigator.clipboard
+      .writeText(content)
+      .then(() => {
+        message.success('代码已复制到剪贴板');
+      })
+      .catch(() => {
+        message.error('复制失败');
+      });
   };
 
   const handleDownload = (content: string, filename: string, type: string) => {
@@ -258,33 +265,43 @@ export const EmailCodePreviewModal: React.FC<EmailCodePreviewModalProps> = ({
               </Button>
               <Button
                 icon={<DownloadOutlined />}
-                onClick={() => handleDownload(generatedHTML, `${state.currentPage?.name || 'email'}.html`, 'text/html')}
+                onClick={() =>
+                  handleDownload(
+                    generatedHTML,
+                    `${state.currentPage?.name || 'email'}.html`,
+                    'text/html'
+                  )
+                }
               >
                 下载 HTML
               </Button>
             </Space>
           </div>
-          <pre style={{
-            backgroundColor: theme === 'dark' ? '#1f1f1f' : '#f5f5f5',
-            padding: '16px',
-            borderRadius: '4px',
-            overflow: 'auto',
-            maxHeight: '500px',
-            fontSize: '12px',
-            lineHeight: '1.4',
-          }}>
+          <pre
+            style={{
+              backgroundColor: theme === 'dark' ? '#1f1f1f' : '#f5f5f5',
+              padding: '16px',
+              borderRadius: '4px',
+              overflow: 'auto',
+              maxHeight: '500px',
+              fontSize: '12px',
+              lineHeight: '1.4',
+            }}
+          >
             <code>{generatedHTML}</code>
           </pre>
         </TabPane>
 
         <TabPane tab="邮件预览" key="preview">
-          <div style={{
-            border: '1px solid #e9ecef',
-            borderRadius: '4px',
-            overflow: 'hidden',
-            maxHeight: '600px',
-            overflowY: 'auto',
-          }}>
+          <div
+            style={{
+              border: '1px solid #e9ecef',
+              borderRadius: '4px',
+              overflow: 'hidden',
+              maxHeight: '600px',
+              overflowY: 'auto',
+            }}
+          >
             <iframe
               srcDoc={generatedHTML}
               style={{

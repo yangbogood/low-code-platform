@@ -1,13 +1,28 @@
 import React, { useState, useRef } from 'react';
-import { Button, Input, Card, Typography, Space, Image, Select, Switch, Divider, Badge, Popconfirm } from 'antd';
-import { DeleteOutlined, HolderOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+  Button,
+  Input,
+  Card,
+  Typography,
+  Space,
+  Image,
+  Select,
+  Switch,
+  Divider,
+  Badge,
+  Popconfirm,
+} from 'antd';
+import {
+  DeleteOutlined,
+  HolderOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useEditor } from '../context/EditorContext';
 import type { ComponentConfig } from '../types';
 
 const { Text, Title, Paragraph } = Typography;
-const { TextArea } = Input;
 
 interface FlexContainerProps {
   component: ComponentConfig;
@@ -92,8 +107,6 @@ const RenderComponentContent: React.FC<{
   onClick?: () => void;
   isSelected?: boolean;
 }> = ({ component: comp, onClick, isSelected }) => {
-  const { dispatch } = useEditor();
-
   const renderComponent = (comp: ComponentConfig) => {
     const baseStyle: React.CSSProperties = {
       ...comp.style,
@@ -201,7 +214,7 @@ const RenderComponentContent: React.FC<{
             onClick={onClick}
             direction={comp.props.direction || 'horizontal'}
           >
-            {comp.children?.map((child) => (
+            {comp.children?.map(child => (
               <RenderComponentContent
                 key={child.id}
                 component={child}
@@ -234,10 +247,12 @@ const RenderComponentContent: React.FC<{
             style={baseStyle}
             onClick={onClick}
             placeholder={comp.props.placeholder || '请选择'}
-            options={comp.props.options || [
-              { label: '选项1', value: 'option1' },
-              { label: '选项2', value: 'option2' },
-            ]}
+            options={
+              comp.props.options || [
+                { label: '选项1', value: 'option1' },
+                { label: '选项2', value: 'option2' },
+              ]
+            }
           />
         );
 
@@ -254,13 +269,14 @@ const RenderComponentContent: React.FC<{
 
       case 'divider':
         return (
-          <Divider
-            {...comp.props}
-            className={`rendered-component ${isSelected ? 'selected' : ''}`}
-            style={baseStyle}
-            onClick={onClick}
-            type={comp.props.type || 'horizontal'}
-          />
+          <div onClick={onClick} style={{ cursor: 'pointer' }}>
+            <Divider
+              {...comp.props}
+              className={`rendered-component ${isSelected ? 'selected' : ''}`}
+              style={baseStyle}
+              type={comp.props.type || 'horizontal'}
+            />
+          </div>
         );
 
       case 'badge':
@@ -285,7 +301,7 @@ const RenderComponentContent: React.FC<{
             style={baseStyle}
             onClick={onClick}
           >
-            {comp.children?.map((child) => (
+            {comp.children?.map(child => (
               <RenderComponentContent
                 key={child.id}
                 component={child}
@@ -313,7 +329,11 @@ const RenderComponentContent: React.FC<{
 };
 
 // 弹性布局容器组件
-export const FlexContainer: React.FC<FlexContainerProps> = ({ component, onClick, isSelected }) => {
+export const FlexContainer: React.FC<FlexContainerProps> = ({
+  component,
+  onClick,
+  isSelected,
+}) => {
   const { dispatch } = useEditor();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -350,7 +370,7 @@ export const FlexContainer: React.FC<FlexContainerProps> = ({ component, onClick
           },
         });
       }
-    } catch (error) {
+    } catch {
       // 静默处理错误
     }
   };
@@ -404,7 +424,7 @@ export const FlexContainer: React.FC<FlexContainerProps> = ({ component, onClick
 
       {/* 子组件 */}
       {component.children && component.children.length > 0 ? (
-        component.children.map((child) => (
+        component.children.map(child => (
           <SortableComponent
             key={child.id}
             component={child}

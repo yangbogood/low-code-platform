@@ -1,0 +1,13 @@
+echo "🚀 运行推送前检查..."
+
+# 运行完整的构建和检查
+echo "🔨 运行完整构建..."
+npm run build
+
+echo "🔍 运行代码检查..."
+npm run lint:check
+
+echo "🔍 运行类型检查..."
+npm run type-check
+
+echo "✅ 所有推送前检查通过！可以安全推送代码。"

@@ -21,7 +21,10 @@ interface CodePreviewModalProps {
   onClose: () => void;
 }
 
-export const CodePreviewModal: React.FC<CodePreviewModalProps> = ({ visible, onClose }) => {
+export const CodePreviewModal: React.FC<CodePreviewModalProps> = ({
+  visible,
+  onClose,
+}) => {
   const { state } = useEditor();
   const { theme } = useTheme();
   const [generatedCode, setGeneratedCode] = useState<{
@@ -64,9 +67,9 @@ export const CodePreviewModal: React.FC<CodePreviewModalProps> = ({ visible, onC
       });
 
       message.success('代码生成成功！');
-    } catch (error) {
+    } catch {
       message.error('代码生成失败');
-      console.error('Code generation error:', error);
+      // console.error('Code generation error:', error);
     } finally {
       setLoading(false);
     }
@@ -162,39 +165,44 @@ export const CodePreviewModal: React.FC<CodePreviewModalProps> = ({ visible, onC
   };
 
   const generateHTMLComponents = (components: any[]): string => {
-    return components.map(component => {
-      switch (component.type) {
-        case 'button':
-          return `<div class="component"><button class="button">${component.props.text || '按钮'}</button></div>`;
-        case 'input':
-          return `<div class="component"><input class="input" placeholder="${component.props.placeholder || '请输入内容'}" /></div>`;
-        case 'text':
-          return `<div class="component"><span class="text">${component.props.content || '文本内容'}</span></div>`;
-        case 'title': {
-          const level = component.props.level || 1;
-          return `<div class="component"><h${level} class="title">${component.props.content || '标题'}</h${level}></div>`;
-        }
-        case 'paragraph':
-          return `<div class="component"><p class="paragraph">${component.props.content || '段落内容'}</p></div>`;
-        case 'card':
-          return `<div class="component">
+    return components
+      .map(component => {
+        switch (component.type) {
+          case 'button':
+            return `<div class="component"><button class="button">${component.props.text || '按钮'}</button></div>`;
+          case 'input':
+            return `<div class="component"><input class="input" placeholder="${component.props.placeholder || '请输入内容'}" /></div>`;
+          case 'text':
+            return `<div class="component"><span class="text">${component.props.content || '文本内容'}</span></div>`;
+          case 'title': {
+            const level = component.props.level || 1;
+            return `<div class="component"><h${level} class="title">${component.props.content || '标题'}</h${level}></div>`;
+          }
+          case 'paragraph':
+            return `<div class="component"><p class="paragraph">${component.props.content || '段落内容'}</p></div>`;
+          case 'card':
+            return `<div class="component">
             <div class="card">
               <div class="card-header">${component.props.title || '卡片标题'}</div>
               <div class="card-body">${component.props.content || '卡片内容'}</div>
             </div>
           </div>`;
-        default:
-          return `<div class="component"><div>${component.type} 组件</div></div>`;
-      }
-    }).join('\n');
+          default:
+            return `<div class="component"><div>${component.type} 组件</div></div>`;
+        }
+      })
+      .join('\n');
   };
 
   const copyToClipboard = (text: string, type: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      message.success(`${type} 代码已复制到剪贴板`);
-    }).catch(() => {
-      message.error('复制失败');
-    });
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        message.success(`${type} 代码已复制到剪贴板`);
+      })
+      .catch(() => {
+        message.error('复制失败');
+      });
   };
 
   const downloadFile = (content: string, filename: string, type: string) => {
@@ -210,19 +218,23 @@ export const CodePreviewModal: React.FC<CodePreviewModalProps> = ({ visible, onC
     message.success(`${filename} 下载成功`);
   };
 
-  const CodeBlock: React.FC<{ code: string; language: string }> = ({ code, language }) => (
-    <div style={{
-      backgroundColor: '#f5f5f5',
-      padding: '16px',
-      borderRadius: '6px',
-      maxHeight: '500px',
-      overflow: 'auto',
-      fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
-      fontSize: '13px',
-      lineHeight: '1.5',
-      whiteSpace: 'pre-wrap',
-      border: '1px solid #e8e8e8',
-    }}>
+  const CodeBlock: React.FC<{ code: string; language: string }> = ({
+    code,
+  }) => (
+    <div
+      style={{
+        backgroundColor: '#f5f5f5',
+        padding: '16px',
+        borderRadius: '6px',
+        maxHeight: '500px',
+        overflow: 'auto',
+        fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
+        fontSize: '13px',
+        lineHeight: '1.5',
+        whiteSpace: 'pre-wrap',
+        border: '1px solid #e8e8e8',
+      }}
+    >
       {code}
     </div>
   );
@@ -255,16 +267,20 @@ export const CodePreviewModal: React.FC<CodePreviewModalProps> = ({ visible, onC
       ]}
     >
       {!generatedCode ? (
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '400px',
-          color: '#999',
-        }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '400px',
+            color: '#999',
+          }}
+        >
           <CodeOutlined style={{ fontSize: '48px', marginBottom: '16px' }} />
-          <Title level={4} style={{ color: '#999' }}>点击"生成代码"开始</Title>
+          <Title level={4} style={{ color: '#999' }}>
+            点击&ldquo;生成代码&rdquo;开始
+          </Title>
           <Text type="secondary">将根据当前页面内容生成对应的代码文件</Text>
         </div>
       ) : (
@@ -288,7 +304,13 @@ export const CodePreviewModal: React.FC<CodePreviewModalProps> = ({ visible, onC
                 </Button>
                 <Button
                   icon={<DownloadOutlined />}
-                  onClick={() => downloadFile(generatedCode.tsx, `${state.currentPage?.name || 'page'}.tsx`, 'text/plain')}
+                  onClick={() =>
+                    downloadFile(
+                      generatedCode.tsx,
+                      `${state.currentPage?.name || 'page'}.tsx`,
+                      'text/plain'
+                    )
+                  }
                 >
                   下载 TSX
                 </Button>
@@ -316,7 +338,13 @@ export const CodePreviewModal: React.FC<CodePreviewModalProps> = ({ visible, onC
                 </Button>
                 <Button
                   icon={<DownloadOutlined />}
-                  onClick={() => downloadFile(generatedCode.scss, `${state.currentPage?.name || 'page'}.scss`, 'text/scss')}
+                  onClick={() =>
+                    downloadFile(
+                      generatedCode.scss,
+                      `${state.currentPage?.name || 'page'}.scss`,
+                      'text/scss'
+                    )
+                  }
                 >
                   下载 SCSS
                 </Button>
@@ -344,7 +372,13 @@ export const CodePreviewModal: React.FC<CodePreviewModalProps> = ({ visible, onC
                 </Button>
                 <Button
                   icon={<DownloadOutlined />}
-                  onClick={() => downloadFile(generatedCode.html, `${state.currentPage?.name || 'page'}.html`, 'text/html')}
+                  onClick={() =>
+                    downloadFile(
+                      generatedCode.html,
+                      `${state.currentPage?.name || 'page'}.html`,
+                      'text/html'
+                    )
+                  }
                 >
                   下载 HTML
                 </Button>
@@ -353,7 +387,9 @@ export const CodePreviewModal: React.FC<CodePreviewModalProps> = ({ visible, onC
                   icon={<EyeOutlined />}
                   onClick={() => {
                     const currentPageId = state.currentPage?.id;
-                    const previewUrl = currentPageId ? `/preview/${currentPageId}` : '/preview';
+                    const previewUrl = currentPageId
+                      ? `/preview/${currentPageId}`
+                      : '/preview';
                     window.open(previewUrl, '_blank');
                   }}
                 >
