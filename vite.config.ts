@@ -7,10 +7,10 @@ export default defineConfig(({ command }) => {
   // 根据环境和命令自动设置 base 路径
   const isProduction = command === 'build';
   const isGitHubPages = process.env.GITHUB_PAGES === 'true';
-
+  const baseUrl = isProduction && isGitHubPages ? '/low-code-platform/' : '/';
   return {
     // 动态 base 配置
-    base: isProduction && isGitHubPages ? '/low-code-platform/' : '/',
+    base: baseUrl,
 
     plugins: [
       react({

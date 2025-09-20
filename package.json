@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:github": "GITHUB_PAGES=true tsc -b && vite build",
+    "build:github": "cross-env GITHUB_PAGES=true tsc -b && cross-env GITHUB_PAGES=true vite build",
+    "build:github:env": "tsc -b && vite build --mode github",
     "build:analyze": "tsc -b && vite build --mode analyze",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
@@ -45,6 +46,7 @@
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.3",
+    "cross-env": "^10.0.0",
     "eslint": "^9.35.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
