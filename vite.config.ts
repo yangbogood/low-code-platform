@@ -94,8 +94,8 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        // 启用 sourcemap
-        sourceMap: true,
+        // 全局变量导入
+        additionalData: `@use "@/styles/variables.scss" as *;`,
       },
     },
     // CSS 模块化配置

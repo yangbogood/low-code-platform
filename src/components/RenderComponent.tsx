@@ -215,16 +215,19 @@ export const RenderComponent: React.FC<RenderComponentProps> = ({
 
       case 'divider':
         return (
-          <Divider
-            {...comp.props}
+          <div
             className={`rendered-component ${isSelected ? 'selected' : ''}`}
             style={baseStyle}
             onClick={onClick}
-            type={comp.props.type || 'horizontal'}
-            orientation={comp.props.orientation || 'center'}
           >
-            {comp.props.children || '分割线'}
-          </Divider>
+            <Divider
+              {...comp.props}
+              type={comp.props.type || 'horizontal'}
+              orientation={comp.props.orientation || 'center'}
+            >
+              {comp.props.children || '分割线'}
+            </Divider>
+          </div>
         );
 
       case 'badge':

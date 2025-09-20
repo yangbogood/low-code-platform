@@ -42,7 +42,7 @@ i18n
 
     // 语言切换时的处理
     saveMissing: true,
-    missingKeyHandler: (lng, ns, key) => {
+    missingKeyHandler: (lng, _ns, key) => {
       console.warn(`Missing translation for key: ${key} in language: ${lng}`);
     },
   });
