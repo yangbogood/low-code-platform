@@ -5,7 +5,7 @@ echo "🔨 运行完整构建..."
 npm run build
 
 echo "🔍 运行代码检查..."
-npm run lint:check
+npm run lint
 
 echo "🔍 运行类型检查..."
 npm run type-check
