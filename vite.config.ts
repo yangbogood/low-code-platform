@@ -1,15 +1,14 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { fileURLToPath, URL } from 'node:url'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { fileURLToPath, URL } from 'node:url';
 
 // https://vite.dev/config/
 export default defineConfig({
   // GitHub Pages 基础路径配置（开发环境不使用）
   // base: '/low-code-platform/',
-  
+
   plugins: [
     react({
-      
       // 启用 JSX 运行时
       jsxRuntime: 'automatic',
       // 启用 Babel 插件
@@ -20,12 +19,14 @@ export default defineConfig({
       },
     }),
   ],
-  
+
   // 路径别名配置
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
+      '@components': fileURLToPath(
+        new URL('./src/components', import.meta.url)
+      ),
       '@context': fileURLToPath(new URL('./src/context', import.meta.url)),
       '@data': fileURLToPath(new URL('./src/data', import.meta.url)),
       '@styles': fileURLToPath(new URL('./src/styles', import.meta.url)),
@@ -33,7 +34,7 @@ export default defineConfig({
       '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
     },
   },
-  
+
   // 开发服务器配置
   server: {
     port: 3000,
@@ -49,11 +50,11 @@ export default defineConfig({
       // },
     },
   },
-  
+
   // 构建配置
   build: {
     target: 'es2015',
-    outDir: 'dist',
+    outDir: 'dist/low-code-platform',
     assetsDir: 'assets',
     sourcemap: false, // 生产环境关闭 sourcemap
     minify: 'terser', // 使用 terser 压缩
@@ -72,7 +73,11 @@ export default defineConfig({
           // Ant Design
           'antd-vendor': ['antd', '@ant-design/icons'],
           // 拖拽相关
-          'dnd-vendor': ['@dnd-kit/core', '@dnd-kit/sortable', '@dnd-kit/utilities'],
+          'dnd-vendor': [
+            '@dnd-kit/core',
+            '@dnd-kit/sortable',
+            '@dnd-kit/utilities',
+          ],
           // 其他工具库
           'utils-vendor': ['uuid'],
         },
@@ -85,14 +90,14 @@ export default defineConfig({
     // 构建大小警告阈值
     chunkSizeWarningLimit: 1000,
   },
-  
+
   // 预览服务器配置
   preview: {
     port: 4173,
     open: true,
     host: true,
   },
-  
+
   // CSS 配置
   css: {
     preprocessorOptions: {
@@ -107,7 +112,7 @@ export default defineConfig({
       generateScopedName: '[name]__[local]___[hash:base64:5]',
     },
   },
-  
+
   // 优化配置
   optimizeDeps: {
     include: [
@@ -122,15 +127,15 @@ export default defineConfig({
     ],
     exclude: [],
   },
-  
+
   // 环境变量配置
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
   },
-  
+
   // 日志级别
   logLevel: 'info',
-  
+
   // 清空屏幕
   clearScreen: false,
-})
+});
