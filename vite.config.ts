@@ -4,6 +4,9 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vite.dev/config/
 export default defineConfig({
+  // GitHub Pages 基础路径配置
+  base: '/low-code-platform/',
+  
   plugins: [
     react({
       
