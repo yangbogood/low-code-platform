@@ -1,11 +1,11 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { EditorPage } from '../pages/EditorPage.tsx';
 import { PreviewPageWrapper } from '../pages/PreviewPage.tsx';
 import { EmailTemplatePageWrapper } from '../pages/EmailTemplatePage.tsx';
 import { NotFoundPage } from '../components/ErrorBoundary';
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: '/',
     element: <EditorPage />,
