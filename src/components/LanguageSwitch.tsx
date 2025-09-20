@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button, Dropdown, Space } from 'antd';
+import { Button, Dropdown, Space, type MenuProps } from 'antd';
 import { GlobalOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import type { MenuProps } from 'antd';
 
 export const LanguageSwitch: React.FC<{
   type?: 'button' | 'icon';
@@ -69,8 +68,19 @@ export const LanguageSwitch: React.FC<{
         <Button
           type="text"
           size={size}
-          icon={<GlobalOutlined />}
+          icon={<GlobalOutlined style={{
+            fontSize: size === 'small' ? '14px' : size === 'large' ? '18px' : '16px',
+          }} />}
           title={t('language.switchLanguage')}
+          style={{
+            borderRadius: '50%',
+            width: size === 'small' ? 32 : size === 'large' ? 48 : 40,
+            height: size === 'small' ? 32 : size === 'large' ? 48 : 40,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all 0.3s ease',
+          }}
         />
       </Dropdown>
     );

@@ -166,6 +166,44 @@ export const getComponentLibraries = (t: (key: string) => string): ComponentLibr
           ] },
         ],
       },
+      {
+        type: 'flex-container',
+        name: '弹性布局',
+        icon: '📐',
+        category: '布局组件',
+        description: '弹性布局容器，支持一行放置多个组件并自动换行',
+        defaultProps: {
+          direction: 'row',
+          wrap: 'wrap',
+          justify: 'flex-start',
+          align: 'stretch',
+          gap: 8,
+        },
+        propTypes: [
+          { name: 'direction', type: 'select', label: '排列方向', options: [
+            { label: '水平', value: 'row' },
+            { label: '垂直', value: 'column' },
+          ] },
+          { name: 'wrap', type: 'select', label: '换行方式', options: [
+            { label: '自动换行', value: 'wrap' },
+            { label: '不换行', value: 'nowrap' },
+          ] },
+          { name: 'justify', type: 'select', label: '主轴对齐', options: [
+            { label: '开始', value: 'flex-start' },
+            { label: '居中', value: 'center' },
+            { label: '结束', value: 'flex-end' },
+            { label: '两端对齐', value: 'space-between' },
+            { label: '环绕', value: 'space-around' },
+          ] },
+          { name: 'align', type: 'select', label: '交叉轴对齐', options: [
+            { label: '拉伸', value: 'stretch' },
+            { label: '开始', value: 'flex-start' },
+            { label: '居中', value: 'center' },
+            { label: '结束', value: 'flex-end' },
+          ] },
+          { name: 'gap', type: 'number', label: '间距 (px)', min: 0, max: 50 },
+        ],
+      },
     ],
   },
   {

@@ -4,6 +4,7 @@ import { EyeOutlined, CodeOutlined, DownloadOutlined } from '@ant-design/icons';
 import { useEditor } from '../context/EditorContext';
 import { RenderComponent } from './RenderComponent';
 import { CodeGenerator } from '../utils/codeGenerator';
+import { useTheme } from '../context/ThemeContext';
 
 const { Title } = Typography;
 
@@ -14,6 +15,7 @@ interface PreviewModalProps {
 
 export const PreviewModal: React.FC<PreviewModalProps> = ({ visible, onClose }) => {
   const { state } = useEditor();
+  const { theme } = useTheme();
 
   const handleGenerateCode = () => {
     if (!state.project) {return;}
@@ -109,13 +111,16 @@ export const PreviewModal: React.FC<PreviewModalProps> = ({ visible, onClose }) 
         </Button>,
       ]}
     >
-      <div style={{
-        minHeight: '600px',
-        padding: '20px',
-        backgroundColor: '#fff',
-        border: '1px solid #f0f0f0',
-        borderRadius: '8px',
-      }}>
+      <div
+        className={`canvas-area canvas-theme-${theme}`}
+        style={{
+          minHeight: '600px',
+          padding: '20px',
+          backgroundColor: theme === 'dark' ? '#1f1f1f' : '#fff',
+          border: '1px solid #f0f0f0',
+          borderRadius: '8px',
+        }}
+      >
         <Title level={3} style={{ marginBottom: '20px' }}>
           {state.currentPage.name}
         </Title>

@@ -27,6 +27,14 @@
   --canvas-bg: #{$background-color};
   --modal-bg: #{$background-color-light};
 
+  // Ant Design 组件变量
+  --ant-tooltip-color: #{$text-color};
+  --ant-tooltip-bg: #{$background-color-light};
+  --ant-tooltip-border-color: #{$border-color};
+  --ant-popover-color: #{$text-color};
+  --ant-popover-bg: #{$background-color-light};
+  --ant-popover-border-color: #{$border-color};
+
   // 阴影
   --shadow-sm: #{$shadow-sm};
   --shadow-md: #{$shadow-md};
@@ -61,6 +69,14 @@
   --toolbar-bg: #1f1f1f;
   --canvas-bg: #141414;
   --modal-bg: #1f1f1f;
+
+  // Ant Design 组件变量
+  --ant-tooltip-color: #ffffff;
+  --ant-tooltip-bg: #1f1f1f;
+  --ant-tooltip-border-color: #434343;
+  --ant-popover-color: #ffffff;
+  --ant-popover-bg: #1f1f1f;
+  --ant-popover-border-color: #434343;
 
   // 阴影
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);

@@ -1,21 +1,51 @@
 import React, { useRef, useState } from 'react';
-import { Button, Space, Typography } from 'antd';
+import { Button, Space, Typography, Input } from 'antd';
 import { PlusOutlined, EyeOutlined, CodeOutlined } from '@ant-design/icons';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+  DragOverlay,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import type { ComponentConfig } from '../types';
 import { useEditor } from '../context/EditorContext';
-import { RenderComponent } from './RenderComponent';
+import { useTheme } from '../context/ThemeContext';
+import { SortableComponent } from './RenderComponent';
+import { CodePreviewModal } from './CodePreviewModal';
+import { generatePageId, generateComponentId } from '../utils/idGenerator';
 
 const { Title } = Typography;
 
 interface CanvasProps {
-  onPreview: () => void;
-  onGenerateCode: () => void;
+  onPreview: (selectedComponent?: ComponentConfig | null) => void;
 }
 
-export const Canvas: React.FC<CanvasProps> = ({ onPreview, onGenerateCode }) => {
+export const Canvas: React.FC<CanvasProps> = ({ onPreview }) => {
   const { state, dispatch } = useEditor();
+  const { theme } = useTheme();
   const canvasRef = useRef<HTMLDivElement>(null);
   const [dragOver, setDragOver] = useState(false);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [codePreviewVisible, setCodePreviewVisible] = useState(false);
+  const [isEditingPageName, setIsEditingPageName] = useState(false);
+  const [editingPageName, setEditingPageName] = useState('');
+
+  // 拖拽传感器配置
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -36,7 +66,7 @@ export const Canvas: React.FC<CanvasProps> = ({ onPreview, onGenerateCode }) => 
 
       if (data.type === 'component') {
         const newComponent: ComponentConfig = {
-          id: `component_${Date.now()}`,
+          id: generateComponentId(data.componentType),
           type: data.componentType,
           name: data.data.name,
           props: { ...data.data.defaultProps },
@@ -48,8 +78,8 @@ export const Canvas: React.FC<CanvasProps> = ({ onPreview, onGenerateCode }) => 
           payload: { component: newComponent },
         });
       }
-    } catch (error) {
-      console.error('拖拽数据解析失败:', error);
+    } catch {
+      // 拖拽数据解析失败，忽略错误
     }
   };
 
@@ -60,11 +90,32 @@ export const Canvas: React.FC<CanvasProps> = ({ onPreview, onGenerateCode }) => 
     });
   };
 
+  // 处理拖拽开始
+  const handleDragStart = (event: { active: { id: string | number } }) => {
+    setActiveId(String(event.active.id));
+  };
+
+  // 处理拖拽排序结束
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    setActiveId(null);
+
+    if (over && active.id !== over.id) {
+      dispatch({
+        type: 'MOVE_COMPONENT',
+        payload: {
+          activeId: active.id as string,
+          overId: over.id as string,
+        },
+      });
+    }
+  };
+
   const handleAddPage = () => {
     if (!state.project) {return;}
 
     const newPage = {
-      id: `page_${Date.now()}`,
+      id: generatePageId(),
       name: `页面 ${state.project.pages.length + 1}`,
       title: `新页面 ${state.project.pages.length + 1}`,
       components: [],
@@ -79,6 +130,48 @@ export const Canvas: React.FC<CanvasProps> = ({ onPreview, onGenerateCode }) => 
       type: 'SET_PROJECT',
       payload: updatedProject,
     });
+  };
+
+  const handleStartEditPageName = () => {
+    if (state.currentPage) {
+      setEditingPageName(state.currentPage.name);
+      setIsEditingPageName(true);
+    }
+  };
+
+  const handleSavePageName = () => {
+    if (!state.currentPage || !state.project) {
+      return;
+    }
+
+    const updatedPage = {
+      ...state.currentPage,
+      name: editingPageName.trim() || state.currentPage.name,
+    };
+
+    const updatedProject = {
+      ...state.project,
+      pages: state.project.pages.map(page =>
+        page.id === updatedPage.id ? updatedPage : page,
+      ),
+    };
+
+    dispatch({
+      type: 'SET_PROJECT',
+      payload: updatedProject,
+    });
+
+    dispatch({
+      type: 'SET_CURRENT_PAGE',
+      payload: updatedPage,
+    });
+
+    setIsEditingPageName(false);
+  };
+
+  const handleCancelEditPageName = () => {
+    setIsEditingPageName(false);
+    setEditingPageName('');
   };
 
   if (!state.currentPage) {
@@ -111,14 +204,40 @@ export const Canvas: React.FC<CanvasProps> = ({ onPreview, onGenerateCode }) => 
         justifyContent: 'space-between',
         alignItems: 'center',
       }}>
-        <Title level={4} style={{ margin: 0 }}>
-          {state.currentPage.name}
-        </Title>
+        {isEditingPageName ? (
+          <Input
+            value={editingPageName}
+            onChange={(e) => setEditingPageName(e.target.value)}
+            onPressEnter={handleSavePageName}
+            onBlur={handleSavePageName}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') {
+                handleCancelEditPageName();
+              }
+            }}
+            autoFocus
+            style={{ width: 200 }}
+            placeholder="输入页面名称"
+          />
+        ) : (
+          <Title
+            level={4}
+            style={{ margin: 0, cursor: 'pointer' }}
+            onClick={handleStartEditPageName}
+            title="点击编辑页面名称"
+          >
+            {state.currentPage.name}
+          </Title>
+        )}
         <Space>
-          <Button icon={<EyeOutlined />} onClick={onPreview}>
-            预览
+          <Button
+            icon={<EyeOutlined />}
+            onClick={() => onPreview(state.selectedComponent)}
+            disabled={!state.selectedComponent}
+          >
+            预览选中组件
           </Button>
-          <Button icon={<CodeOutlined />} onClick={onGenerateCode}>
+          <Button icon={<CodeOutlined />} onClick={() => setCodePreviewVisible(true)}>
             生成代码
           </Button>
         </Space>
@@ -130,7 +249,7 @@ export const Canvas: React.FC<CanvasProps> = ({ onPreview, onGenerateCode }) => 
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`canvas-area ${dragOver ? 'drag-over' : ''}`}
+        className={`canvas-area canvas-theme-${theme} ${dragOver ? 'drag-over' : ''}`}
         style={{
           flex: 1,
           padding: '20px',
@@ -144,18 +263,52 @@ export const Canvas: React.FC<CanvasProps> = ({ onPreview, onGenerateCode }) => 
             拖拽组件到这里开始设计
           </div>
         ) : (
-          <div className="canvas-area-content">
-            {state.currentPage.components.map((component) => (
-              <RenderComponent
-                key={component.id}
-                component={component}
-                onClick={() => handleComponentClick(component)}
-                isSelected={state.selectedComponent?.id === component.id}
-              />
-            ))}
-          </div>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={state.currentPage.components.map(comp => comp.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              <div className="canvas-area-content">
+                {state.currentPage.components.map((component) => (
+                  <SortableComponent
+                    key={component.id}
+                    component={component}
+                    onClick={() => handleComponentClick(component)}
+                    isSelected={state.selectedComponent?.id === component.id}
+                  />
+                ))}
+              </div>
+            </SortableContext>
+            <DragOverlay>
+              {activeId ? (
+                <div className="drag-overlay">
+                  {(() => {
+                    const activeComponent = state.currentPage.components.find(comp => comp.id === activeId);
+                    return activeComponent ? (
+                      <SortableComponent
+                        component={activeComponent}
+                        onClick={() => {}}
+                        isSelected={false}
+                      />
+                    ) : null;
+                  })()}
+                </div>
+              ) : null}
+            </DragOverlay>
+          </DndContext>
         )}
       </div>
+
+      {/* 代码预览模态框 */}
+      <CodePreviewModal
+        visible={codePreviewVisible}
+        onClose={() => setCodePreviewVisible(false)}
+      />
     </div>
   );
 };

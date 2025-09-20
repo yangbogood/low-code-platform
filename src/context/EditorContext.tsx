@@ -22,6 +22,7 @@ type EditorAction =
   | { type: 'UPDATE_COMPONENT'; payload: { id: string; props: Record<string, any> } }
   | { type: 'ADD_COMPONENT'; payload: { component: ComponentConfig; parentId?: string } }
   | { type: 'DELETE_COMPONENT'; payload: string }
+  | { type: 'MOVE_COMPONENT'; payload: { activeId: string; overId: string } }
   | { type: 'TOGGLE_PREVIEW' }
   | { type: 'UNDO' }
   | { type: 'REDO' }
@@ -91,11 +92,21 @@ function editorReducer(state: EditorState, action: EditorAction): EditorState {
         ),
       };
 
-      return {
+      const newState = {
         ...state,
         project: updatedProject,
         currentPage: updatedPage,
       };
+
+      // 自动保存到localStorage
+      try {
+        localStorage.setItem('low-code-project', JSON.stringify(updatedProject));
+        console.log('EditorContext: Auto-saved project after UPDATE_COMPONENT');
+      } catch (error) {
+        console.error('EditorContext: Failed to auto-save project:', error);
+      }
+
+      return newState;
     }
 
     case 'ADD_COMPONENT': {
@@ -129,11 +140,21 @@ function editorReducer(state: EditorState, action: EditorAction): EditorState {
         ),
       };
 
-      return {
+      const newState = {
         ...state,
         project: newProject,
         currentPage: newPage,
       };
+
+      // 自动保存到localStorage
+      try {
+        localStorage.setItem('low-code-project', JSON.stringify(newProject));
+        console.log('EditorContext: Auto-saved project after ADD_COMPONENT');
+      } catch (error) {
+        console.error('EditorContext: Failed to auto-save project:', error);
+      }
+
+      return newState;
     }
 
     case 'DELETE_COMPONENT': {
@@ -158,12 +179,66 @@ function editorReducer(state: EditorState, action: EditorAction): EditorState {
         ),
       };
 
-      return {
+      const newState = {
         ...state,
         project: updatedProjectAfterDelete,
         currentPage: updatedPageAfterDelete,
         selectedComponent: null,
       };
+
+      // 自动保存到localStorage
+      try {
+        localStorage.setItem('low-code-project', JSON.stringify(updatedProjectAfterDelete));
+        console.log('EditorContext: Auto-saved project after DELETE_COMPONENT');
+      } catch (error) {
+        console.error('EditorContext: Failed to auto-save project:', error);
+      }
+
+      return newState;
+    }
+
+    case 'MOVE_COMPONENT': {
+      if (!state.project || !state.currentPage) {return state;}
+
+      const moveComponent = (components: ComponentConfig[]): ComponentConfig[] => {
+        const activeIndex = components.findIndex(comp => comp.id === action.payload.activeId);
+        const overIndex = components.findIndex(comp => comp.id === action.payload.overId);
+
+        if (activeIndex === -1 || overIndex === -1 || activeIndex === overIndex) {
+          return components;
+        }
+
+        const newComponents = [...components];
+        const [movedComponent] = newComponents.splice(activeIndex, 1);
+        newComponents.splice(overIndex, 0, movedComponent);
+
+        return newComponents;
+      };
+
+      const reorderedComponents = moveComponent(state.currentPage.components);
+      const updatedPageAfterMove = { ...state.currentPage, components: reorderedComponents };
+      const updatedProjectAfterMove = {
+        ...state.project,
+        pages: state.project.pages.map(page =>
+          page.id === updatedPageAfterMove.id ? updatedPageAfterMove : page,
+        ),
+      };
+
+      const newState = {
+        ...state,
+        project: updatedProjectAfterMove,
+        currentPage: updatedPageAfterMove,
+      };
+
+      // 自动保存到localStorage
+      try {
+        localStorage.setItem('low-code-project', JSON.stringify(updatedProjectAfterMove));
+        console.log('EditorContext: Auto-saved project after MOVE_COMPONENT');
+      } catch (error) {
+        console.error('EditorContext: Failed to auto-save project:', error);
+      }
+
+      return newState;
     }
 
     case 'TOGGLE_PREVIEW':

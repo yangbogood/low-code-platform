@@ -1,6 +1,12 @@
 import React from 'react';
 import type { ComponentConfig } from '../types';
-import { Button, Input, Card, Typography, Space, Image, Select, Switch, Divider, Badge } from 'antd';
+import { Button, Input, Card, Typography, Space, Image, Select, Switch, Divider, Badge, Popconfirm } from 'antd';
+import { DeleteOutlined, HolderOutlined } from '@ant-design/icons';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { useEditor } from '../context/EditorContext';
+import { ResizableInput } from './ResizableInput';
+import { FlexContainer } from './FlexContainer';
 
 const { Text, Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -11,11 +17,118 @@ interface RenderComponentProps {
   isSelected?: boolean;
 }
 
-export const RenderComponent: React.FC<RenderComponentProps> = ({
+// 可排序的组件包装器
+const SortableComponent: React.FC<{
+  component: ComponentConfig;
+  onClick?: () => void;
+  isSelected?: boolean;
+}> = ({ component, onClick, isSelected }) => {
+  const { dispatch } = useEditor();
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: component.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0 : 1,
+  };
+
+  const handleDelete = () => {
+    dispatch({
+      type: 'DELETE_COMPONENT',
+      payload: component.id,
+    });
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`sortable-component ${isSelected ? 'selected' : ''}`}
+    >
+      {/* 拖拽手柄 */}
+      <div
+        {...attributes}
+        {...listeners}
+        className="drag-handle"
+        style={{
+          position: 'absolute',
+          top: 4,
+          left: 4,
+          zIndex: 10,
+          cursor: 'grab',
+          color: 'var(--text-color-secondary)',
+          fontSize: '12px',
+          padding: '2px',
+          borderRadius: '2px',
+          backgroundColor: 'var(--background-color)',
+          border: '1px solid var(--border-color)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        title="拖拽排序"
+      >
+        <HolderOutlined />
+      </div>
+
+      {/* 删除按钮 */}
+      <Popconfirm
+        title="确定要删除这个组件吗？"
+        onConfirm={handleDelete}
+        okText="确定"
+        cancelText="取消"
+      >
+        <Button
+          type="text"
+          size="small"
+          icon={<DeleteOutlined />}
+          className="delete-button"
+          style={{
+            position: 'absolute',
+            top: 4,
+            right: 4,
+            zIndex: 10,
+            color: '#ff4d4f',
+            fontSize: '12px',
+            padding: '2px',
+            minWidth: 'auto',
+            height: 'auto',
+            backgroundColor: 'var(--background-color)',
+            border: '1px solid var(--border-color)',
+          }}
+          title="删除组件"
+        />
+      </Popconfirm>
+
+      {/* 组件内容 */}
+      <div onClick={onClick} style={{ paddingTop: '24px' }}>
+        <RenderComponentContent
+          component={component}
+          isSelected={isSelected}
+        />
+      </div>
+    </div>
+  );
+};
+
+// 组件内容渲染器
+const RenderComponentContent: React.FC<{
+  component: ComponentConfig;
+  onClick?: () => void;
+  isSelected?: boolean;
+}> = ({
   component,
   onClick,
   isSelected = false,
 }) => {
+  const { dispatch } = useEditor();
   const renderComponent = (comp: ComponentConfig) => {
     const baseStyle: React.CSSProperties = {
       ...comp.style,
@@ -40,12 +153,44 @@ export const RenderComponent: React.FC<RenderComponentProps> = ({
 
       case 'input':
         return (
-          <Input
-            {...comp.props}
+          <ResizableInput
+            value={comp.props.value || ''}
+            placeholder={comp.props.placeholder || '请输入内容'}
+            width={comp.props.width || 200}
+            height={comp.props.height || 32}
+            disabled={false}
+            showResizeHandles={isSelected}
             className={`rendered-component ${isSelected ? 'selected' : ''}`}
             style={baseStyle}
-            onClick={onClick}
-            placeholder={comp.props.placeholder || '请输入内容'}
+            onResize={(width, height) => {
+              if (isSelected) {
+                dispatch({
+                  type: 'UPDATE_COMPONENT',
+                  payload: {
+                    id: comp.id,
+                    props: {
+                      ...comp.props,
+                      width,
+                      height,
+                    },
+                  },
+                });
+              }
+            }}
+            onValueChange={(value) => {
+              if (isSelected) {
+                dispatch({
+                  type: 'UPDATE_COMPONENT',
+                  payload: {
+                    id: comp.id,
+                    props: {
+                      ...comp.props,
+                      value,
+                    },
+                  },
+                });
+              }
+            }}
           />
         );
 
@@ -56,7 +201,7 @@ export const RenderComponent: React.FC<RenderComponentProps> = ({
             className={`rendered-component ${isSelected ? 'selected' : ''}`}
             style={{
               ...baseStyle,
-              color: comp.props.color || 'var(--text-color)',
+              color: comp.props.color || 'inherit',
               fontSize: comp.props.fontSize || 14,
             }}
             onClick={onClick}
@@ -73,7 +218,7 @@ export const RenderComponent: React.FC<RenderComponentProps> = ({
             className={`rendered-component ${isSelected ? 'selected' : ''}`}
             style={{
               ...baseStyle,
-              color: comp.props.color || 'var(--text-color)',
+              color: comp.props.color || 'inherit',
             }}
             onClick={onClick}
           >
@@ -88,7 +233,7 @@ export const RenderComponent: React.FC<RenderComponentProps> = ({
             className={`rendered-component ${isSelected ? 'selected' : ''}`}
             style={{
               ...baseStyle,
-              color: comp.props.color || 'var(--text-color)',
+              color: comp.props.color || 'inherit',
             }}
             onClick={onClick}
           >
@@ -172,6 +317,15 @@ export const RenderComponent: React.FC<RenderComponentProps> = ({
               />
             ))}
           </div>
+        );
+
+      case 'flex-container':
+        return (
+          <FlexContainer
+            component={comp}
+            onClick={onClick}
+            isSelected={isSelected}
+          />
         );
 
       case 'textarea':
@@ -277,3 +431,11 @@ export const RenderComponent: React.FC<RenderComponentProps> = ({
 
   return renderComponent(component);
 };
+
+// 主导出组件
+export const RenderComponent: React.FC<RenderComponentProps> = (props) => {
+  return <RenderComponentContent {...props} />;
+};
+
+// 导出可排序组件供Canvas使用
+export { SortableComponent };

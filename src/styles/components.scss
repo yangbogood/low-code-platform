@@ -34,13 +34,18 @@ body {
 
 // 工具栏样式
 .toolbar {
-  @include flex-between;
   height: $header-height;
   padding: 0 $spacing-lg;
   background: $background-color-light;
   border-bottom: 1px solid $border-color-light;
   box-shadow: $shadow-sm;
   z-index: 10;
+
+  &-content {
+    @include flex-between;
+    height: 100%;
+    max-width: 100%;
+  }
 
   &-title {
     margin: 0;
@@ -187,6 +192,134 @@ body {
     @include flex-column;
     gap: $spacing-sm;
   }
+
+  // 画布暗色模式样式
+  &.canvas-theme-dark {
+    background-color: #141414;
+    color: #ffffff;
+
+    .canvas-area-placeholder {
+      color: #a6a6a6;
+    }
+
+    // 画布内的文本组件样式
+    .ant-typography {
+      color: #ffffff !important;
+    }
+
+    .ant-typography-caption,
+    .ant-typography-text {
+      color: #a6a6a6 !important;
+    }
+
+    // 画布内的标题样式
+    .ant-typography-title {
+      color: #ffffff !important;
+    }
+
+    // 画布内的段落样式
+    .ant-typography-paragraph {
+      color: #ffffff !important;
+    }
+
+    // 画布内的按钮样式
+    .ant-btn {
+      background-color: #1f1f1f;
+      border-color: #434343;
+      color: #ffffff;
+
+      &:hover {
+        background-color: #141414;
+        border-color: #177ddc;
+        color: #177ddc;
+      }
+
+      &.ant-btn-primary {
+        background-color: #177ddc;
+        border-color: #177ddc;
+        color: #ffffff;
+
+        &:hover {
+          background-color: #3c9be8;
+          border-color: #3c9be8;
+        }
+      }
+    }
+
+    // 画布内的输入框样式
+    .ant-input,
+    .ant-input-textarea {
+      background-color: #1f1f1f;
+      border-color: #434343;
+      color: #ffffff;
+
+      &::placeholder {
+        color: #595959;
+      }
+
+      &:focus {
+        border-color: #177ddc;
+        box-shadow: 0 0 0 2px rgba(23, 125, 220, 0.2);
+      }
+    }
+
+    // 画布内的选择器样式
+    .ant-select {
+      .ant-select-selector {
+        background-color: #1f1f1f;
+        border-color: #434343;
+        color: #ffffff;
+      }
+
+      .ant-select-selection-placeholder {
+        color: #595959;
+      }
+    }
+
+    // 画布内的开关样式
+    .ant-switch {
+      background-color: #434343;
+
+      &.ant-switch-checked {
+        background-color: #177ddc;
+      }
+    }
+
+    // 画布内的卡片样式
+    .ant-card {
+      background-color: #1f1f1f;
+      border-color: #434343;
+
+      .ant-card-head {
+        border-bottom-color: #434343;
+        color: #ffffff;
+      }
+
+      .ant-card-body {
+        color: #ffffff;
+      }
+    }
+
+    // 画布内的分割线样式
+    .ant-divider {
+      border-color: #434343;
+      color: #a6a6a6;
+    }
+
+    // 画布内的徽标样式
+    .ant-badge {
+      .ant-badge-count {
+        background-color: #177ddc;
+        color: #ffffff;
+      }
+    }
+
+    // 画布内的图片样式
+    .ant-image {
+      border-radius: 4px;
+      border: 1px solid #434343;
+    }
+  }
 }
 
 // 渲染组件样式
@@ -207,6 +340,94 @@ body {
 
   &.dragging {
     animation: dragStart 0.2s ease;
+  }
+}
+
+// 可排序组件样式
+.sortable-component {
+  position: relative;
+  margin-bottom: $spacing-sm;
+  border-radius: $border-radius-md;
+  transition: all $transition-fast;
+
+  &:hover {
+    .drag-handle,
+    .delete-button {
+      opacity: 1;
+    }
+  }
+
+  &.selected {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba($primary-color, 0.1);
+  }
+
+  .drag-handle {
+    opacity: 0;
+    transition: opacity $transition-fast;
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+
+    &:hover {
+      background-color: $primary-color;
+      color: white;
+      border-color: $primary-color;
+    }
+  }
+
+  .delete-button {
+    opacity: 0;
+    transition: opacity $transition-fast;
+
+    &:hover {
+      background-color: #ff4d4f;
+      color: white;
+      border-color: #ff4d4f;
+    }
+  }
+}
+
+// 拖拽状态样式
+.drag-over {
+  background-color: rgba($primary-color, 0.05);
+  border: 2px dashed $primary-color;
+  border-radius: $border-radius-md;
+}
+
+// 拖拽时的组件样式
+.sortable-component[data-dragging="true"] {
+  opacity: 0;
+  z-index: 1000;
+}
+
+// 拖拽预览样式
+.dnd-kit-drag-preview {
+  opacity: 0.8;
+  transform: rotate(2deg);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: $border-radius-md;
+  background: white;
+  border: 2px solid $primary-color;
+}
+
+// 拖拽覆盖层样式
+.drag-overlay {
+  .sortable-component {
+    opacity: 0.8;
+    transform: rotate(2deg);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border: 2px solid $primary-color;
+    background: white;
+    border-radius: $border-radius-md;
+    
+    .drag-handle,
+    .delete-button {
+      display: none;
+    }
   }
 }
 

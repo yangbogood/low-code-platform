@@ -1,0 +1,251 @@
+// Ant Design 组件样式覆盖
+// 确保所有Ant Design组件在主题切换时都能正确显示
+
+// Tooltip 样式
+.ant-tooltip {
+  .ant-tooltip-inner {
+    background-color: var(--ant-tooltip-bg, #ffffff);
+    color: var(--ant-tooltip-color, #262626);
+    border: 1px solid var(--ant-tooltip-border-color, #d9d9d9);
+    border-radius: 6px;
+    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .ant-tooltip-arrow {
+    &::before {
+      background-color: var(--ant-tooltip-bg, #ffffff);
+      border: 1px solid var(--ant-tooltip-border-color, #d9d9d9);
+    }
+  }
+}
+
+// Popover 样式
+.ant-popover {
+  .ant-popover-inner {
+    background-color: var(--ant-popover-bg, #ffffff);
+    border: 1px solid var(--ant-popover-border-color, #d9d9d9);
+    border-radius: 6px;
+    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .ant-popover-inner-content {
+    color: var(--ant-popover-color, #262626);
+  }
+
+  .ant-popover-arrow {
+    &::before {
+      background-color: var(--ant-popover-bg, #ffffff);
+      border: 1px solid var(--ant-popover-border-color, #d9d9d9);
+    }
+  }
+}
+
+// Modal 样式
+.ant-modal {
+  .ant-modal-content {
+    background-color: var(--modal-bg, #ffffff);
+    border: 1px solid var(--border-color, #d9d9d9);
+  }
+
+  .ant-modal-header {
+    background-color: var(--modal-bg, #ffffff);
+    border-bottom: 1px solid var(--border-color, #d9d9d9);
+  }
+
+  .ant-modal-title {
+    color: var(--text-color, #262626);
+  }
+
+  .ant-modal-body {
+    color: var(--text-color, #262626);
+  }
+
+  .ant-modal-footer {
+    border-top: 1px solid var(--border-color, #d9d9d9);
+  }
+}
+
+// Drawer 样式
+.ant-drawer {
+  .ant-drawer-content {
+    background-color: var(--modal-bg, #ffffff);
+  }
+
+  .ant-drawer-header {
+    background-color: var(--modal-bg, #ffffff);
+    border-bottom: 1px solid var(--border-color, #d9d9d9);
+  }
+
+  .ant-drawer-title {
+    color: var(--text-color, #262626);
+  }
+
+  .ant-drawer-body {
+    color: var(--text-color, #262626);
+  }
+}
+
+// Dropdown 样式
+.ant-dropdown {
+  .ant-dropdown-menu {
+    background-color: var(--modal-bg, #ffffff);
+    border: 1px solid var(--border-color, #d9d9d9);
+    border-radius: 6px;
+    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .ant-dropdown-menu-item {
+    color: var(--text-color, #262626);
+
+    &:hover {
+      background-color: var(--background-color, #f5f5f5);
+    }
+  }
+}
+
+// Select 下拉框样式
+.ant-select-dropdown {
+  background-color: var(--modal-bg, #ffffff);
+  border: 1px solid var(--border-color, #d9d9d9);
+  border-radius: 6px;
+  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+
+  .ant-select-item {
+    color: var(--text-color, #262626);
+
+    &:hover {
+      background-color: var(--background-color, #f5f5f5);
+    }
+
+    &.ant-select-item-option-selected {
+      background-color: var(--primary-color, #1890ff);
+      color: #ffffff;
+    }
+  }
+}
+
+// DatePicker 样式
+.ant-picker-dropdown {
+  background-color: var(--modal-bg, #ffffff);
+  border: 1px solid var(--border-color, #d9d9d9);
+  border-radius: 6px;
+  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+
+  .ant-picker-panel {
+    background-color: var(--modal-bg, #ffffff);
+  }
+
+  .ant-picker-cell {
+    color: var(--text-color, #262626);
+
+    &:hover {
+      background-color: var(--background-color, #f5f5f5);
+    }
+
+    &.ant-picker-cell-selected {
+      background-color: var(--primary-color, #1890ff);
+      color: #ffffff;
+    }
+  }
+}
+
+// Button 样式覆盖
+.ant-btn {
+  // 暗色模式下的按钮样式
+  &[data-theme='dark'] {
+    background-color: var(--component-bg, #1f1f1f);
+    border-color: var(--border-color, #434343);
+    color: var(--text-color, #ffffff);
+
+    &:hover {
+      background-color: var(--background-color, #141414);
+      border-color: var(--primary-color, #177ddc);
+      color: var(--primary-color, #177ddc);
+    }
+
+    &:focus {
+      background-color: var(--component-bg, #1f1f1f);
+      border-color: var(--primary-color, #177ddc);
+      color: var(--text-color, #ffffff);
+    }
+
+    &.ant-btn-primary {
+      background-color: var(--primary-color, #177ddc);
+      border-color: var(--primary-color, #177ddc);
+      color: #ffffff;
+
+      &:hover {
+        background-color: #3c9be8;
+        border-color: #3c9be8;
+      }
+    }
+
+    &.ant-btn-text {
+      background-color: transparent;
+      border-color: transparent;
+      color: var(--text-color, #ffffff);
+
+      &:hover {
+        background-color: var(--background-color, #141414);
+        color: var(--primary-color, #177ddc);
+      }
+    }
+  }
+}
+
+// 注意：移除了全局暗色模式样式，确保界面元素不受主题切换影响
+
+// 工具栏按钮特殊样式
+.toolbar-actions {
+  .ant-btn {
+    background-color: var(--component-bg, #ffffff);
+    border-color: var(--border-color, #d9d9d9);
+    color: var(--text-color, #262626);
+
+    &:hover {
+      background-color: var(--background-color, #f5f5f5);
+      border-color: var(--primary-color, #1890ff);
+      color: var(--primary-color, #1890ff);
+    }
+
+    &.ant-btn-primary {
+      background-color: var(--primary-color, #1890ff);
+      border-color: var(--primary-color, #1890ff);
+      color: #ffffff;
+
+      &:hover {
+        background-color: #40a9ff;
+        border-color: #40a9ff;
+      }
+    }
+
+    &.ant-btn-text {
+      background-color: transparent;
+      border-color: transparent;
+      color: var(--text-color, #262626);
+
+      &:hover {
+        background-color: var(--background-color, #f5f5f5);
+        color: var(--primary-color, #1890ff);
+      }
+    }
+  }
+}
+
+// 工具栏图标样式（保持正常模式）
+.toolbar-actions {
+  .anticon {
+    color: var(--text-color, #262626);
+  }
+}
+
+// 确保所有浮动元素都有正确的背景色
+.ant-tooltip,
+.ant-popover,
+.ant-dropdown,
+.ant-select-dropdown,
+.ant-picker-dropdown,
+.ant-cascader-dropdown,
+.ant-tree-select-dropdown {
+  z-index: 1100;
+}

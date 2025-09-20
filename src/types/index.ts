@@ -26,6 +26,8 @@ export interface PropType {
   defaultValue?: any;
   options?: { label: string; value: any }[];
   required?: boolean;
+  min?: number;
+  max?: number;
 }
 
 export interface PageConfig {
@@ -34,6 +36,8 @@ export interface PageConfig {
   title: string;
   components: ComponentConfig[];
   globalStyle?: React.CSSProperties;
+  width?: number;
+  height?: number;
 }
 
 export interface ProjectConfig {

@@ -22,7 +22,7 @@ export const PropertyPanel: React.FC<PropertyPanelProps> = ({ component }) => {
     }
   }, [component, form]);
 
-  const handlePropertyChange = (changedValues: any) => {
+  const handlePropertyChange = (changedValues: Record<string, any>) => {
     if (!component) {return;}
 
     dispatch({
@@ -122,6 +122,9 @@ export const PropertyPanel: React.FC<PropertyPanelProps> = ({ component }) => {
       ],
       input: [
         { name: 'placeholder', type: 'string', label: '占位符', defaultValue: '请输入内容' },
+        { name: 'value', type: 'string', label: '输入值', defaultValue: '' },
+        { name: 'width', type: 'number', label: '宽度 (px)', defaultValue: 200, min: 100, max: 800 },
+        { name: 'height', type: 'number', label: '高度 (px)', defaultValue: 32, min: 24, max: 200 },
         { name: 'size', type: 'select', label: '输入框大小', options: [
           { label: '小', value: 'small' },
           { label: '中', value: 'middle' },
@@ -164,6 +167,30 @@ export const PropertyPanel: React.FC<PropertyPanelProps> = ({ component }) => {
         { name: 'backgroundColor', type: 'color', label: '背景颜色' },
         { name: 'padding', type: 'number', label: '内边距', defaultValue: 16 },
         { name: 'margin', type: 'number', label: '外边距', defaultValue: 0 },
+      ],
+      'flex-container': [
+        { name: 'direction', type: 'select', label: '排列方向', options: [
+          { label: '水平', value: 'row' },
+          { label: '垂直', value: 'column' },
+        ], defaultValue: 'row' },
+        { name: 'wrap', type: 'select', label: '换行方式', options: [
+          { label: '自动换行', value: 'wrap' },
+          { label: '不换行', value: 'nowrap' },
+        ], defaultValue: 'wrap' },
+        { name: 'justify', type: 'select', label: '主轴对齐', options: [
+          { label: '开始', value: 'flex-start' },
+          { label: '居中', value: 'center' },
+          { label: '结束', value: 'flex-end' },
+          { label: '两端对齐', value: 'space-between' },
+          { label: '环绕', value: 'space-around' },
+        ], defaultValue: 'flex-start' },
+        { name: 'align', type: 'select', label: '交叉轴对齐', options: [
+          { label: '拉伸', value: 'stretch' },
+          { label: '开始', value: 'flex-start' },
+          { label: '居中', value: 'center' },
+          { label: '结束', value: 'flex-end' },
+        ], defaultValue: 'stretch' },
+        { name: 'gap', type: 'number', label: '间距 (px)', defaultValue: 8, min: 0, max: 50 },
       ],
       textarea: [
         { name: 'placeholder', type: 'string', label: '占位符', defaultValue: '请输入内容' },
